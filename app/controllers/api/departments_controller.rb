@@ -36,6 +36,6 @@ def set_department
   @department = Department.find(params[:id])
 end
 
-def department_parama
+def department_params
   params.require(:department).permit(:name)
 end
