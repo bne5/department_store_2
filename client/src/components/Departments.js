@@ -12,6 +12,7 @@ class Departments extends React.Component {
         this.setState({ departments: res.data, });
       })
   }
+
   
   renderDepartments = () => {
     const { departments, } = this.state;
@@ -23,7 +24,7 @@ class Departments extends React.Component {
       <Card>
         <Card.Content>
           <Card.Header>{ department.name }</Card.Header>
-        </Card.Content>
+        </Card.Content> 
         <Card.Content extra>
           <Button as={Link} to={`/departments/${department.id}`} color='blue'>
             View

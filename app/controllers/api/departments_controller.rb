@@ -29,13 +29,13 @@ class Api::DepartmentsController < ApplicationController
   def destroy
     @department.destroy
   end
-end
 
-private
-def set_department
-  @department = Department.find(params[:id])
-end
+  private
+  def set_department
+    @department = Department.find(params[:id])
+  end
 
-def department_params
-  params.require(:department).permit(:name)
+  def department_params
+    params.require(:department).permit(:name)
+  end
 end
