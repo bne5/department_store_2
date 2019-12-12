@@ -1,16 +1,26 @@
 import React from 'react';
 import axios from 'axios';
+import Products from './Products';
+import { Link, } from 'react-router-dom';
 import { Header, Segment, Button } from 'semantic-ui-react';
 
 class DepartmentView extends React.Component {
-  state = { department: {}, };
+  state = { department: {}, products: [], };
 
   componentDidMount() {
-    axios.get(`/api/departments/${this.props.match.params.id}`)
+    const { id, } = this.props.match.params;
+
+    axios.get(`/api/departments/${id}`)
       .then( res => {
         this.setState({ department: res.data, });
       })
-  }
+
+    axios.get(`/api/departments/${id}/products`)
+      .then( res => {
+        this.setState({ products: res.data, });
+      })
+
+  };
 
   removeDepartment = (id) => {
     axios.delete(`/api/departments/${id}`)
@@ -22,8 +32,9 @@ class DepartmentView extends React.Component {
   }
 
   render() {
-    const { name, } = this.state.department;
-    
+    const { department: { name, }, products } = this.state;
+    const { id, } = this.props.match.params;
+
     return (
       <div>
         <Segment>
@@ -32,6 +43,20 @@ class DepartmentView extends React.Component {
           </Header>
         </Segment>
         <br />
+        <div>
+          <Header as="h2">
+            Products:
+          </Header>
+          <Button
+            as={Link}
+            color="green"
+            to={`/departments/${id}/new-product`}
+          >
+            Add Product
+          </Button>
+        </div>
+        <hr />
+        <Products products={products} />
         <br />
         <Button color="black" onClick={this.props.history.goBack}>
           Back
